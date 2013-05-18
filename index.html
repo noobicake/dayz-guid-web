@@ -65,6 +65,7 @@ $(window).load(function(e) {
 		var Key = $(".CDKey").val();
 		if(Key === "") {
 			$(".Status").fadeOut(250);
+			$(".LinkWrapper").fadeOut(250);
 		} else {
 			if(Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
 				var CDKey = $.trim(Key);
