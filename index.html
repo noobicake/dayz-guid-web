@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DayZ GUID Tool</title>
+<link rel="stylesheet" href="/_reset.css" />
+
+</head>
+
+<body style="display: none;">
+<header>
+  <img src="/logo.png">
+</header>
+
+<section class="Framework">
+	<div class="Notification">
+    	Is this tool safe to use?<br>
+		- <b>Yes, this tool is safe to use.</b><br><br>
+		- This tool runs on your side of the browser (client-side), nothing are sent to the server, nor saved.<br><br>
+		- If you have your cd-key available, this is an easy way to get your GUID.<br><br>
+		- If this tool was server-side, we would never make this tool public.<br><br><br>
+		To get started, type your <b>Operation Arrowhead</b> key in the field below.
+    </div>
+
+    <input type="text" class="CDKey DefaultInput_Text" placeholder="Insert your CD-Key to get your GUID">
+    <input type="hidden" class="GUID" id="StringGUID">
+    <br><br>
+    <div class="Status H"></div>
+    
+    <div class="LinkWrapper H">
+        <a class="CopyToClipboard" id="CopyGUID" data-clipboard-target="StringGUID">
+            <img src="/copy.png" height="16">
+            Copy GUID to clipboard
+        </a>
+    </div>
+	
+    <div class="CopyStatus H">
+    	<div class="StatusContent H"></div>
+    </div>
+
+</section>
+
+<section class="Footer">
+    <div class="Container">
+        <div class="Wrapper">
+            NoobiCake &copy; 2013<a class="FR" href="https://">Source</a>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/jquery.shuffleLetters.js"></script>
+<script type="text/javascript" src="/jquery.md5.js"></script>
+<script type="text/javascript" src="/ZeroClipboard.min.js"></script>
+<script type="text/javascript">
+$(window).load(function(e) {
+	$("body").delay(500).fadeIn();
+	
+	var clip = new ZeroClipboard($("#CopyGUID"), {
+		moviePath: "ZeroClipboard.swf"
+	});
+
+	$(".CDKey").on("input", function(e) {
+		//e.preventDefault();
+		var Key = $(".CDKey").val();
+		if(Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
+			var CDKey = $.trim(Key);
+			var Prefix = "BE";
+			
+			var HashCDKey = $.md5(CDKey);
+			var GUID = $.md5(Prefix + HashCDKey);
+			
+			$(".Status").fadeIn().html("GUID: <span class='SContent' id='ShuffleText'></span>");
+			$(".GUID").val(GUID);
+			$(".SContent").text(GUID);
+			$("#ShuffleText").shuffleLetters({
+				fps : 45,
+				step: 5
+			});
+			$(".LinkWrapper").delay(250).fadeIn(250);
+		} else if(! Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
+			$(".Status").fadeIn().html("CD-Key is invalid!<br>Pattern: XXXX-XXXXX-XXXXX-XXXXX-XXXXX");
+			$(".LinkWrapper").fadeOut(250);
+		}
+	});
+	
+	clip.on("complete", function() {
+		$(".CopyStatus").fadeIn(250).delay(5000).fadeOut();
+		$(".StatusContent").delay(250).html("Copied to clipboard").fadeIn(250).delay(4250).fadeOut();
+	});
+});
+
+
+</script>
+
+<style>
+* {
+	font-family: 'Lucida Console';
+}
+html {
+	height: 100%;
+}
+header {
+	margin: 25px auto;
+	width: 600px;
+}
+section.Framework {
+	margin: 10px auto;
+	width: 600px;
+}
+section.Footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: #eee;
+	color: #bbb;
+}
+section.Footer .Container {
+	margin: 0 auto;
+	width: 600px;
+}
+section.Footer .Wrapper {
+	margin: 10px; 
+}
+section.Footer .Wrapper a {
+	color: #bbb;
+	text-decoration: none;
+	outline: none;
+}
+section.Footer .Wrapper a:hover {
+	color: #252525;
+	text-decoration: underline;
+}
+.DefaultInput_Text {
+	font-family: 'Lucida Console';
+	width: 560px;
+	border: 5px solid #eee;
+	padding: 15px;
+	font-size: 22px;
+	outline: none;
+}
+	.DefaultInput_Text:hover {
+		border: 5px solid #e0e0e0;
+	}
+	.DefaultInput_Text:focus {
+		border: 5px solid #00bffe;
+	}
+	
+.Notification {
+	text-align: left;
+	padding: 10px;
+	background: #eee;
+	margin-bottom: 10px;
+}
+.Status {
+	border-left: 5px solid #ccc;
+	background: #eee;
+	padding: 10px;
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+.CopyStatus {
+	background: #c0ff00;
+	padding: 10px;
+	font-size: 32px;
+	margin-bottom: 10px;
+	text-align: center;
+	margin-top: 10px;
+	height: 32px;
+}
+	
+
+a.CopyToClipboard, #CopyGUID {
+	margin-top: 10px;
+	position: relative;
+	padding: 5px 10px 5px 25px;
+	font-size: 18px;
+	color: #252525;
+}
+a.CopyToClipboard:hover, #CopyGUID.zeroclipboard-is-hover {
+	color: #005db3;
+}
+a.CopyToClipboard img {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+}
+
+
+.H {
+	display: none;
+}
+.FR {
+float: right;
+}
+</style>
+
+</body>
+</html>
