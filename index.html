@@ -81,6 +81,8 @@ $(window).load(function(e) {
 		} else if(! Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
 			$(".Status").fadeIn().html("CD-Key is invalid!<br>Pattern: XXXX-XXXXX-XXXXX-XXXXX-XXXXX");
 			$(".LinkWrapper").fadeOut(250);
+		} else if(Key === "") {
+			$(".Status").fadeOut();
 		}
 	});
 	
