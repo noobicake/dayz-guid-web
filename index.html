@@ -63,26 +63,28 @@ $(window).load(function(e) {
 	$(".CDKey").on("input", function(e) {
 		//e.preventDefault();
 		var Key = $(".CDKey").val();
-		if(Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
-			var CDKey = $.trim(Key);
-			var Prefix = "BE";
-			
-			var HashCDKey = $.md5(CDKey);
-			var GUID = $.md5(Prefix + HashCDKey);
-			
-			$(".Status").fadeIn().html("GUID: <span class='SContent' id='ShuffleText'></span>");
-			$(".GUID").val(GUID);
-			$(".SContent").text(GUID);
-			$("#ShuffleText").shuffleLetters({
-				fps : 45,
-				step: 5
-			});
-			$(".LinkWrapper").delay(250).fadeIn(250);
-		} else if(! Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
-			$(".Status").fadeIn().html("CD-Key is invalid!<br>Pattern: XXXX-XXXXX-XXXXX-XXXXX-XXXXX");
-			$(".LinkWrapper").fadeOut(250);
-		} else if(Key === "") {
-			$(".Status").fadeOut();
+		if(Key === "") {
+			$(".Status").fadeOut(250);
+		} else {
+			if(Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
+				var CDKey = $.trim(Key);
+				var Prefix = "BE";
+				
+				var HashCDKey = $.md5(CDKey);
+				var GUID = $.md5(Prefix + HashCDKey);
+				
+				$(".Status").fadeIn().html("GUID: <span class='SContent' id='ShuffleText'></span>");
+				$(".GUID").val(GUID);
+				$(".SContent").text(GUID);
+				$("#ShuffleText").shuffleLetters({
+					fps : 45,
+					step: 5
+				});
+				$(".LinkWrapper").delay(250).fadeIn(250);
+			} else if(! Key.match(/\b[\w\d]{4}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}-[\w\d]{5}\b/gi)) {
+				$(".Status").fadeIn().html("CD-Key is invalid!<br>Pattern: XXXX-XXXXX-XXXXX-XXXXX-XXXXX");
+				$(".LinkWrapper").fadeOut(250);
+			}
 		}
 	});
 	
